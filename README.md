@@ -71,7 +71,7 @@ You can see that our Python application is currently running.
 
 It has a process ID (pid) of 31505.
 
-Now we are going to use our sigterm program to sent an interrupt signal to our Python application.
+Now we are going to use our sigterm program to send an interrupt signal to our Python application.
 
     [root@ip-ww-xx-yy-zz signal]# ./sigterm 31505
     Sent a SIGTERM signal to pid 31505
