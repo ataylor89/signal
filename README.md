@@ -31,7 +31,7 @@ Then I cd into my signal folder.
 
     [root@ip-ww-xx-yy-zz homepage]# cd ../signal
     [root@ip-ww-xx-yy-zz signal]# ls
-    sigint.c  sigint.s
+    sigterm.c  sigterm.s
 
 Now it's time to compile the source files.
 
@@ -48,57 +48,57 @@ Now we can compile our C file and our assembly file.
 
 We compile the assembly file first, since the C file depends on the assembly file.
 
-    [root@ip-ww-xx-yy-zz signal]# nasm -f elf64 sigint.s -o sigint.o
+    [root@ip-ww-xx-yy-zz signal]# nasm -f elf64 sigterm.s -o sigterm.o
     [root@ip-ww-xx-yy-zz signal]# ls
-    sigint.c  sigint.o  sigint.s
-    [root@ip-172-31-93-134 signal]# gcc sigint.c sigint.o -o sigint
-    [root@ip-172-31-93-134 signal]# ls
-    sigint  sigint.c  sigint.o  sigint.s
+    sigterm.c  sigterm.o  sigterm.s
+    [root@ip-ww-xx-yy-zz signal]# gcc sigterm.c sigterm.o -o sigterm
+    [root@ip-ww-xx-yy-zz signal]# ls
+    sigterm  sigterm.c  sigterm.o  sigterm.s
 
 We have finished compiling our C and assembly files.
 
-We created an executable called "sigint".
+We created an executable called "sigterm".
 
 Let's quickly check the status of our process.
 
-    [root@ip-172-31-93-134 sigint]# ps aux | grep python
+    [root@ip-ww-xx-yy-zz signal]# ps aux | grep python
     root       31505  --  -- -- -- pts/5    S    03:18   0:00 /usr/bin/python3 app.py
     root       31590  --  -- -- -- pts/5    S+   03:21   0:00 grep --color=auto python
-    [root@ip-172-31-93-134 sigint]# jobs
+    [root@ip-ww-xx-yy-zz signal]# jobs
     [1]+  Running                 /usr/bin/python3 app.py &
 
 You can see that our Python application is currently running.
 
 It has a process ID (pid) of 31505.
 
-Now we are going to use our sigint program to sent an interrupt signal to our Python application.
+Now we are going to use our sigterm program to sent an interrupt signal to our Python application.
 
-    [root@ip-172-31-93-134 signal]# ./sigint 31505
-    Sent a SIGINT signal to pid 31505
+    [root@ip-ww-xx-yy-zz signal]# ./sigterm 31505
+    Sent a SIGTERM signal to pid 31505
     [1]+  Terminated              /usr/bin/python3 app.py  (wd: /home/ec2-user/homepage)
     (wd now: /home/ec2-user/signal)
 
 It worked.
 
-Our sigint signal worked.
+Our sigterm signal worked.
 
 Let's use the ps and jobs commands to confirm that it worked.
 
-    [root@ip-172-31-93-134 signal]# ps aux | grep python
+    [root@ip-ww-xx-yy-zz signal]# ps aux | grep python
     root       31770  --  -- --  -- pts/5    S+   03:27   0:00 grep --color=auto python
 
 You can see that it's missing from the ps aux output.
 
-    [root@ip-172-31-93-134 signal]# jobs
-    [root@ip-172-31-93-134 signal]#
+    [root@ip-ww-xx-yy-zz signal]# jobs
+    [root@ip-ww-xx-yy-zz signal]#
 
 We also see that there are currently no jobs running.
 
-So we were able to confirm that our sigint program worked.
+So we were able to confirm that our sigterm program worked.
 
-The sigint program accepts an integer argument. The integer argument is the pid of the process we want to interrupt.
+The sigterm program accepts an integer argument. The integer argument is the pid of the process we want to interrupt.
 
-In order to write the sigint program, we used a combination of C and assembly.
+In order to write the sigterm program, we used a combination of C and assembly.
 
 We used C to parse a process ID from our command line arguments.
 
@@ -110,9 +110,9 @@ In this case, the system call number is 62.
 
 Register rdi contains the first argument to the system call.
 
-The argument to our sigint function actually gets stored in register rdi, by the caller, so we don't have to update register rdi.
+The argument to our sigterm function actually gets stored in register rdi, by the caller, so we don't have to update register rdi.
 
-In other words, the process ID that we pass to sigint gets stored in register rdi, so we don't have to update register rdi.
+In other words, the process ID that we pass to sigterm gets stored in register rdi, so we don't have to update register rdi.
 
 Register rsi contains the second argument to the system call, the value 15, which stands for SIGTERM.
 
@@ -120,13 +120,13 @@ After registers rax, rdi, and rsi have the correct values, we can make our sysca
 
 To be clear, rax has the value 62, rdi has the process ID, and rsi has the value 15.
 
-Then we return from our sigint function.
+Then we return from our sigterm function.
 
 The ret instruction pops the return address from the stack and loads it into the instruction pointer register.
 
-The return address corresponds to the instruction immediately following the sigint call.
+The return address corresponds to the instruction immediately following the sigterm call.
 
-In other words, the return address corresponds to `printf("Sent a SIGINT signal to pid %d\n", pid);` in sigint.c.
+In other words, the return address corresponds to `printf("Sent a SIGTERM signal to pid %d\n", pid);` in sigterm.c.
 
 Well, that's it for an introduction.
 
