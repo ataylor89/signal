@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern int sigterm(int pid);
+extern void sigterm(int pid);
 
 int main(int argc, char **argv) {
     if (argc == 2) {
