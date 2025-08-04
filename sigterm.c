@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         printf("Sent a SIGTERM signal to pid %d.\n", pid);
     }
     else {
-        printf("Usage: sigterm <pid>");
+        printf("Usage: sigterm <pid>\n");
     }
     return 0;
 }
