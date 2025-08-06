@@ -180,7 +180,7 @@ The text below was originally part of the previous section, but I moved it to a 
     # It worked like a charm
     # They worked like a charm
     # And we did not have to specify the full path of our programs, since the directory for these programs is already in the PATH variable
-    # If zsh and bash are not given the full directory for a program, then it tries out the directories included in the PATH variable until it finds one of them that works, or until it runs out of directories
+    # If zsh and bash are not given the full path for a program, then it tries out the directories included in the PATH variable until it finds one of them that works, or until it runs out of directories
     # So we can run our sigstop, sigcont, and sigterm programs from any directory, since their directory is included in the PATH variable
     # This is convenient and it saves us time
     # We don't have to type out a full path... we don't have to cd into the signal/arm directory... we can just use the program names
