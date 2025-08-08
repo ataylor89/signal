@@ -153,7 +153,7 @@ The text below was originally part of the previous section, but I moved it to a 
     # We confirmed the process is running
     # Now let's send some signals
     % sigstop 19582
-    Sent a SIGSTOP signal to pid 19582.
+    Sent a stop signal to pid 19582.
     [1]  + suspended (signal)  python3 ~/Github/homepage/app.py
 
     # Let's run the jobs command again to see the status of the process
@@ -162,14 +162,14 @@ The text below was originally part of the previous section, but I moved it to a 
 
     # The process is suspended. Let's restart it using the sigcont program.
     % sigcont 19582
-    Sent a SIGCONT signal to pid 19582.
+    Sent a resume signal to pid 19582.
     % jobs
     [1]  + running    python3 ~/Github/homepage/app.py
 
     # The Python process is running once again. We were able to restart it using the sigcont program.
     # Now let's terminate the Python process using the sigterm program.
     % sigterm 19582
-    Sent a SIGTERM signal to pid 19582.
+    Sent a quit signal to pid 19582.
     %
     [1]  + terminated  python3 ~/Github/homepage/app.py
     % jobs
