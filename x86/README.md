@@ -74,7 +74,7 @@ It has a process ID (pid) of 31505.
 Now we are going to use our sigterm program to send an interrupt signal to our Python application.
 
     [root@ip-ww-xx-yy-zz signal]# ./sigterm 31505
-    Sent a SIGTERM signal to pid 31505.
+    Sent a quit signal to pid 31505.
     [1]+  Terminated              /usr/bin/python3 app.py  (wd: /home/ec2-user/homepage)
     (wd now: /home/ec2-user/signal)
 
@@ -126,7 +126,7 @@ The ret instruction pops the return address from the stack and loads it into the
 
 The return address corresponds to the instruction immediately following the sigterm call.
 
-In other words, the return address corresponds to `printf("Sent a SIGTERM signal to pid %d\n", pid);` in sigterm.c.
+In other words, the return address corresponds to `printf("Sent a quit signal to pid %d\n", pid);` in sigterm.c.
 
 Well, that's it for an introduction.
 
