@@ -17,7 +17,7 @@ The instructions for compiling the C and assembly files on an arm64 MacBook are 
     % ls
     sigcont.c	sigcont.s	sigstop.c	sigstop.s	sigterm.c	sigterm.s
 
-    # Now we  will use the as assembler to compile the assembly files into object files
+    # Now we will use the as assembler to compile the assembly files into object files
     % as sigterm.s -o sigterm.o
     % as sigstop.s -o sigstop.o
     % as sigcont.s -o sigcont.o
